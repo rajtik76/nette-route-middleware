@@ -84,11 +84,11 @@ class Bootstrap
                 if ($middleware instanceof MiddlewareInterface) {
                     try {
                         // Run middleware
-                        $middleware->handle($request);
+                        $middleware->handle(request: $request, container: $container);
                     } catch (RedirectException $e) {
-                        $response = new RedirectResponse($e->url, $e->httpCode);
+                        $response = new RedirectResponse(url: $e->url, httpCode: $e->httpCode);
                         // Redirect on redirect response
-                        $response->send(new Nette\Http\Request(new Nette\Http\UrlScript()), new Nette\Http\Response());
+                        $response->send(httpRequest: new Nette\Http\Request(new Nette\Http\UrlScript()), httpResponse: new Nette\Http\Response());
                         exit;
                     }
                 }
