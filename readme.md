@@ -7,3 +7,6 @@ So I create something similar to Laravel route middleware.
 2. In [RouteFactory.php](./app/Core/RouterFactory.php) add middleware metadata key with a list of middlewares
 
 And that's it. The main magic happens in [Bootstrap.php](./app/Bootstrap.php) in attachMiddlewareHook().
+
+## How to test?
+go to `/deny` URL and you will be redirected from middleware [DenyMiddleware](./app/Http/Middleware/DenyMiddleware.php) to `/denied-page` 
