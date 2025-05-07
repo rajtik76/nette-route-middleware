@@ -65,9 +65,12 @@ class Bootstrap
      */
     private function attachMiddlewareHook(Nette\DI\Container $container): void
     {
+        // Get application from container
         $application = $container->getByType(Application::class);
 
+        // onRequest hook
         $application->onRequest[] = function (Application $app, Request $request) use ($container): void {
+            // Get middleware array
             $middlewareList = $request->getParameter('middleware') ? $request->getParameter('middleware')() : [];
 
             foreach ($middlewareList as $middlewareClass) {
@@ -75,13 +78,16 @@ class Bootstrap
                     continue;
                 }
 
+                // Get middleware service
                 $middleware = $container->getByType($middlewareClass);
 
                 if ($middleware instanceof MiddlewareInterface) {
                     try {
+                        // Run middleware
                         $middleware->handle($request);
                     } catch (RedirectException $e) {
                         $response = new RedirectResponse($e->url, $e->httpCode);
+                        // Redirect on redirect response
                         $response->send(new Nette\Http\Request(new Nette\Http\UrlScript()), new Nette\Http\Response());
                         exit;
                     }
