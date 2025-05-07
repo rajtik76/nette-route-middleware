@@ -1,6 +1,6 @@
 services:
 	- App\Core\RouterFactory::createRouter
-
+	- App\Http\Middleware\DenyMiddleware
 
 search:
 	-	in: %appDir%
