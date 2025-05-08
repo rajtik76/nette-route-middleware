@@ -45,5 +45,53 @@ $router->addRoute(mask: '/deny', metadata: [
 ```
 And that's it. The main magic happens in [Bootstrap.php](./app/Bootstrap.php) in attachMiddlewareHook().
 
-## How to test?
-go to `/deny` URL and you will be redirected from middleware [DenyMiddleware](./app/Http/Middleware/DenyMiddleware.php) to `/denied-page`
+## How to test manually?
+Go to `/deny` URL and you will be redirected from middleware [DenyMiddleware](./app/Http/Middleware/DenyMiddleware.php) to `/denied-page`
+
+## How to run PHPUnit tests?
+This project includes PHPUnit tests to verify the functionality of the middleware system. To run the tests:
+
+1. Install dependencies (if you haven't already):
+```bash
+composer install
+```
+
+2. Run the PHPUnit tests:
+```bash
+./vendor/bin/phpunit
+```
+
+### Test Structure
+- **Unit Tests**: Located in the `tests/Unit` directory
+  - `Http/Middleware`: Tests for middleware classes
+  - `Exception`: Tests for exception classes
+  - `Core`: Tests for core components like RouterFactory
+
+### Creating Your Own Tests
+1. Create a new test class in the appropriate directory
+2. Extend `PHPUnit\Framework\TestCase`
+3. Add test methods that begin with `test`
+4. Use assertions to verify expected behavior
+
+Example:
+```php
+<?php
+namespace Tests\Unit\YourNamespace;
+
+use PHPUnit\Framework\TestCase;
+
+class YourTest extends TestCase
+{
+    public function testSomething(): void
+    {
+        // Arrange
+        $object = new YourClass();
+
+        // Act
+        $result = $object->someMethod();
+
+        // Assert
+        $this->assertEquals('expected value', $result);
+    }
+}
+```
